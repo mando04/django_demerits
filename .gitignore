@@ -1,0 +1,8 @@
+*.pyc
+*.db
+*.sock
+*.orig
+*.pid
+restart.py
+*.xml
+*.log

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+   {% block content %}
+      <h3>Add Person to Demerit Board</h3>
+      <form action="{% url adduser %}" method="POST">{% csrf_token %}
+          Name:<input type="text" name="pname"><br>
+          <button class="btn btn-primary" value="Submit">Submit</button>
+      </form>
+      <hr>
+      <div class="row">
+	<div class="span4">
+          {# Put your code here#}
+          <h2>Add Demerit</h2>
+          <form action="{% url add %}" method="POST">{% csrf_token %}
+          <select name="demerit">
+	     <option value="shoboating">shoboating (pink)</option>
+	     <option value="bigot">bigotry (red)</option>
+	     <option value="sassin">sassin (orange)</option>
+             <option value="ignuntz">ignuntz (green)</option>
+	     <option value="insurrection">insurrection (blue)</option>
+	     <option value="isolationism">isolationism (purple)</option>
+	     <option value="demilitarization">demilitarization (yellow)</option>
+          </select>
+          <br>
+          <select name="person">{% for i in person %}
+	    <option value="{{i.id}}">{{i.name}}</option>{% endfor %}
+          </select>
+          <br>
+           <button class="btn btn-primary" value="Submit">Submit</button>
+         </form>
+        </div>
+        <div class="span5">
+	    <h3>Legend</h3>
+	    <table cellspacing="2" cellpadding="3" border=1>
+	      <tr>
+		<td align="left">shoboating</td><td align="left"><img src="{{ STATIC_URL }}img/stars/pink.png" width="25" height="25"></img>
+		</td>
+		<td align="left">bigotry</td><td align="left"><img src="{{ STATIC_URL }}img/stars/red.png" width="25" height="25"></img>
+	        </td>
+	      	<td align="left">sassin</td><td align="left"><img src="{{ STATIC_URL }}img/stars/orange.png" width="25" height="25"></img>
+  	        </td>
+	      </tr>
+		<td align="left">ignuntz</td><td align="left"><img src="{{ STATIC_URL }}img/stars/green.png" width="25" height="25"></img>
+		</td>
+                <td align="left">insurrection</td><td align="left"><img src="{{ STATIC_URL }}img/stars/blue.png" width="25" height="25"></img>
+                </td>
+                <td align="left">isolationism</td><td align="left"><img src="{{ STATIC_URL }}img/stars/purple.png" width="25" height="25"></img>
+                </td>
+              </tr>
+	      <tr>
+                <td align="left">demilitarization</td><td align="left"><img src="{{ STATIC_URL }}img/stars/yellow.png" width="25" height="25"></img>
+                </td>
+              </tr>
+	    </table>
+        </div>
+      </div>
+      <hr>
+      <p>
+      {% if person %}
+        {% for p in person %}
+         {{ p.name }}
+	   {% if p.demerits.sassin %}
+             {% for i in p.demerits.sassin|get_range %}
+               <img src="{{ STATIC_URL }}img/stars/orange.png" width="25" height="25"></img>
+             {% endfor %}
+           {% endif %}{% if p.demerits.shoboating %}
+	     {% for i in p.demerits.shoboating|get_range %}
+	       <img src="{{ STATIC_URL }}img/stars/pink.png" width="25" height="25"></img>
+	     {% endfor %}
+	   {% endif %}
+	   {% if p.demerits.bigot %}
+             {% for i in p.demerits.bigot|get_range %}
+               <img src="{{ STATIC_URL }}img/stars/red.png" width="25" height="25" {% if p.addedby %}ALT="{{ p.addedby }}"{% endif %}></img>
+             {% endfor %}
+           {% endif %}
+	   {% if p.demerits.ignuntz %}
+             {% for i in p.demerits.ignuntz|get_range %}
+               <img src="{{ STATIC_URL }}img/stars/green.png" width="25" height="25"></img>
+             {% endfor %}
+           {% endif %}
+	   {% if p.demerits.insurrection %}
+             {% for i in p.demerits.insurrection|get_range %}
+               <img src="{{ STATIC_URL }}img/stars/blue.png" width="25" height="25"></img>
+             {% endfor %}
+           {% endif %}
+           {% if p.demerits.isolationism %}
+             {% for i in p.demerits.isolationism|get_range %}
+               <img src="{{ STATIC_URL }}img/stars/purple.png" width="25" height="25"></img>
+             {% endfor %}
+           {% endif %}
+	   {% if p.demerits.demilitarization %}
+             {% for i in p.demerits.demilitarization|get_range %}
+               <img src="{{ STATIC_URL }}img/stars/yellow.png" width="25" height="25"></img>
+             {% endfor %}
+           {% endif %}
+	<p>
+	{% endfor %}
+	<hr>
+      {% else %}
+	No Persons Added yet!<font size="6" color="red">&#10032</font>
+      {% endif %}
+   {% endblock content %}

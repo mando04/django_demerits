@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+  <script type="text/javascript">
+    <!--
+    window.location = "/"
+    //-->
+  </script>
+  {% else %}
+  <form name="submit" action="" method="POST">{% csrf_token %}
+  {% if form.errors %}<p>Please correct the following fields</p>{%endif%}
+  {% if error %}{{ error}} {% endif%}
+  {{ form }}<br>
+  <input class="btn btn-primary" type="submit" value="Submit!" />
+  </form>
+  {% endif %}
+{% endblock content %}

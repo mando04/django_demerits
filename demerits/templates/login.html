@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+  <script type="text/javascript">
+    <!--
+    window.location = "/"
+    //-->
+  </script>
+  {% else %}
+  <form name="submit" action="" method="POST">{% csrf_token %}
+  {% if form.errors %}{{ form.errors }} {% endif %}
+  Username:<br>{{ form.username }}<br>
+  Password:<br>{{ form.password }}
+  <br>
+  <input class="btn btn-primary" type="submit" value="Login"> - <small><a href="/login/forgotpassword">forgot password</a>{# or <a href="{% url register %}">	Sign up</a>#}
+  </form><br>
+  {% if error %}<strong>{{ error }}</strong>{% endif %}
+  {% endif %}
+{% endblock content %}

@@ -1,0 +1,19 @@
+from django.db import models
+from djangotoolbox.fields import ListField, EmbeddedModelField
+
+
+class DEMERITS(models.Model):
+    ignuntz = models.CharField(max_length=5)
+    bigotry = models.CharField(max_length=5)
+    sassin = models.CharField(max_length=5)
+    insurrection = models.CharField(max_length=5)
+    isolationism = models.CharField(max_length=5)
+    demilitarization = models.CharField(max_length=5)
+    shoboatin = models.CharField(max_length=5)
+
+class Person(models.Model):
+    name = models.CharField(max_length=250)
+    demerits = ListField(EmbeddedModelField('DEMERITS'), editable=False)
+    def __unicode__(self):
+        return self.name
+
